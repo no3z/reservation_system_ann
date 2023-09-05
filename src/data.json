@@ -1,0 +1,21 @@
+{
+    "theaters": [
+        {
+            "name": "Theater A",
+            "rooms": [
+                {
+                    "name": "Room 1",
+                    "movie": {
+                        "title": "Movie X"
+                    }
+                },
+                {
+                    "name": "Room 2",
+                    "movie": {
+                        "title": "Movie Y"
+                    }
+                }
+            ]
+        }
+    ]
+}

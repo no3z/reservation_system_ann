@@ -1,0 +1,68 @@
+{
+    "theaters": [
+        {
+            "name": "Cineplex Theater",
+            "rooms": [
+                {
+                    "name": "Screen 1",
+                    "movie": {
+                        "title": "Avengers: Endgame"
+                    }
+                },
+                {
+                    "name": "Screen 2",
+                    "movie": {
+                        "title": "Spider-Man: No Way Home"
+                    }
+                },
+                {
+                    "name": "Screen 3",
+                    "movie": {
+                        "title": "The Matrix Resurrections"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Starlight Cinemas",
+            "rooms": [
+                {
+                    "name": "Auditorium 1",
+                    "movie": {
+                        "title": "Dune"
+                    }
+                },
+                {
+                    "name": "Auditorium 2",
+                    "movie": {
+                        "title": "Black Widow"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Royal Cinema",
+            "rooms": [
+                {
+                    "name": "Hall 1",
+                    "movie": {
+                        "title": "No Time to Die"
+                    }
+                },
+                {
+                    "name": "Hall 2",
+                    "movie": {
+                        "title": "Wonder Woman 1984"
+                    }
+                },
+                {
+                    "name": "Hall 3",
+                    "movie": {
+                        "title": "A Quiet Place Part II"
+                    }
+                }
+            ]
+        },
+        
+    ]
+}
