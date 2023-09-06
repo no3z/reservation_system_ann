@@ -126,10 +126,13 @@ It performs the following actions per client:
 - Sends another POST request to the `/bookings` endpoint to retrieve booking details for the selected movie in the chosen theater.
 - Calculates and prints the mean latency of the requests made during the function's execution.
 
+The client sends continuous requests in a while loop, creating a random number of concurrent clients (between 1 and 50) and asyncronously starting all of them.
 
 ## Example files
 
 ![Screenshot of docker-compose execution of both server and client](/images/output.png)
+
+We can see the log line for the mean latency of the last 64 requests log which is quite nice around: 0.0002 seconds per a full client test_function.
 
 ### Reservation system json definition
 
