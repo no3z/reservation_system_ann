@@ -1,0 +1,11 @@
+# Use an official Python runtime as the parent image
+FROM python:3.9-slim-buster
+
+# Set the working directory inside the container
+WORKDIR /usr/src/client
+
+# Copy the local client.py into the container at /usr/src/client
+COPY ./client/client_async.py .
+
+# Define an entry point for the container
+CMD ["python", "./client_async.py"]

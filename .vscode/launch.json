@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build-debug/ReservationSystem", // Replace with your executable's path
-            "args": ["/home/anortesn/Code/ReservationSystem/src/data2.json"], // Command-line arguments if any
+            "args": ["${workspaceFolder}/src/data/data2.json"], // Command-line arguments if any
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

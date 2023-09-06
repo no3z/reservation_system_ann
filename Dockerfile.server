@@ -1,0 +1,46 @@
+# Start from the latest Ubuntu image
+FROM ubuntu:latest
+
+# Define maintainer label
+LABEL maintainer="alberto.nortes@gmail.com"
+
+# Install essential tools and libraries
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    python3 \
+    python3-pip \
+    doxygen \
+    libgtest-dev \
+    git
+
+# Install Conan using pip
+RUN pip3 install conan
+
+# Set up the Conan profile for GCC (you may need to adjust these settings)
+RUN conan profile detect
+
+# Copy your C++ project into the Docker image
+COPY ./src /usr/src/reservation_system/src
+COPY ./docs /usr/src/reservation_system/docs
+COPY CMakeLists.txt /usr/src/reservation_system
+COPY conanfile.txt /usr/src/reservation_system
+
+
+# Switch to the project directory
+WORKDIR /usr/src/reservation_system
+
+# Use Conan to install your project's dependencies
+RUN conan install . -of build -s build_type=Release -b missing
+
+# Use CMake to build your project
+RUN mkdir -p build && cd build && \
+    cmake .. -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Release && \
+    cmake --build .
+
+# Copy initial json data to build directory
+RUN mkdir -p data
+COPY src/data/data2.json /data/data.json
+
+# Set the entry point for the container to your compiled application (adjust as necessary)
+ENTRYPOINT ["./build/ReservationSystem", "/data/data.json"]

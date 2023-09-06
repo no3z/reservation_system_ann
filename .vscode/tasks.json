@@ -7,7 +7,7 @@
             "command": "bash",
             "args": [
                 "-c",
-                "mkdir -p build-debug && cd build-debug && cmake -S ..  -DCMAKE_TOOLCHAIN_FILE=build-debug/conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug && make"
+                "conan install . -of build-debug -s build_type=Debug -b missing && mkdir -p build-debug && cd build-debug && cmake -S ..  -DCMAKE_TOOLCHAIN_FILE=build-debug/conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug && make"
             ],
             "group": {
                 "kind": "build",

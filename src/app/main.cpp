@@ -1,11 +1,14 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
 #include <string>
 #include <asio.hpp>
 #include <json/json.h>
 #include <thread>
 #include <asio/io_context.hpp>
 #include <chrono>
+#include <signal.h>
+
 #include "reservation_system.h"
 
 using asio::ip::tcp;
@@ -302,13 +305,23 @@ private:
     ReservationSystem &reservationSystem_;
 };
 
+
+///////////////////////////////////////////////////////////////////////////////
+/// @brief Signal handler to stop server execution
+void signalHandler(int signum) {
+    std::cout << "Interrupt signal (" << signum << ") received.\n";
+    // Terminate program
+    exit(signum);
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @brief Will initialize 'number_of_threads' to listen to requests.
 /// @param argc
 /// @param argv Need to provide at least a filename with a json theater structure
 /// @return
 int main(int argc, char *argv[])
-{
+{   
     if (argc != 2)
     {
         std::cout << "Usage: " << argv[0] << " <filename>" << std::endl;
@@ -316,10 +329,18 @@ int main(int argc, char *argv[])
     }
 
     const std::string filename = argv[1];
+    std::cout << "Reading file: " << filename << std::endl;
+    std::ifstream file(filename.c_str());
+    if (!file)
+    {
+        std::cerr << "Error: File " << filename << " does not exist or could not be opened." << std::endl;
+        return 2; // Return a different error code for file not found
+    }
+    file.close();  // Don't forget to close the file
 
     try
     {
-        asio::io_context io_context;
+        asio::io_context io_context;        
         asio::io_context::work work(io_context); // Keep the io_context active
 
         // Create a thread pool with n 'number_of_threads'
@@ -331,6 +352,8 @@ int main(int argc, char *argv[])
                                      { io_context.run(); });
         }
 
+        signal(SIGINT, signalHandler);
+
         ReservationSystem reservationSystem(filename);
 
         // Start the server
@@ -338,7 +361,7 @@ int main(int argc, char *argv[])
         Server server(io_context, endpoint, reservationSystem);
         std::cout << "Opened server in port: 8080" << std::endl;
         std::cout << "Avaliable Movies: " << reservationSystem.getAllPlayingMoviesJson() << std::endl;
-
+        
         // Wait for all threads in the thread pool to finish
         for (auto &thread : thread_pool)
         {

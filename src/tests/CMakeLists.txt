@@ -13,3 +13,6 @@ target_link_libraries(tests PRIVATE reservation_sys gtest gtest_main )
 
 # Register tests with CTest
 add_test(NAME ReservationUnitTests COMMAND tests)
+
+# Execute tests
+add_custom_target(run_tests ALL COMMAND ${CMAKE_CTEST_COMMAND} DEPENDS tests)

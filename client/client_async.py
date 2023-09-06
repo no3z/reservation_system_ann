@@ -38,12 +38,12 @@ async def async_send_post_request(path, data):
     end_time = time.time()
     latency = end_time - start_time
     latencies.append(latency)
-    # print(path, json.dumps(data), "->", response.status, latency)
+    print(f"{path} Req: {json.dumps(data)} Resp: {response.status}, {json.dumps(out)} latency: {latency:.8f}")
     return out
 
 async def async_test_function():
 
-    # Send a GET request to the /movies endpoint
+    # Send GET request to the /movies endpoint
     movies_data = await async_send_request("GET", "/movies")
 
     # Parse the JSON data
@@ -52,21 +52,27 @@ async def async_test_function():
     # Select a random movie
     selected_movie = random.choice(movies_list)
     data = {"movie": selected_movie}
-    theaters = await async_send_post_request("/find", data)
 
+    # Send POST req: Find theaters for this movie
+    theaters = await async_send_post_request("/find", data)
     theaters_list = json.loads(theaters)
+
+    # Select a random theater
     selected_theater = random.choice(theaters_list)
 
+    # Compose a random range of numbers of seat to book
     array_length = random.randint(0, 6)  # Adjust the range as needed
     random_integers = [random.randint(0, 19) for _ in range(array_length)]
-
     data = {"theater": selected_theater, "movie": selected_movie, "seats": random_integers}
-    book = await async_send_post_request("/seats", data)    
 
-    
+    # Send POST req: booking 
+    book = await async_send_post_request("/seats", data)    
     data = {"theater": selected_theater, "movie": selected_movie}
+
+    # Send POST req: get bookings
     seats = await async_send_post_request("/bookings", data)
 
+    # Calculate whole function latencies
     mean_latency = sum(latencies) / len(latencies)
     print(f"Mean latency of the last 64 test operations: {mean_latency:.8f} seconds")
 
