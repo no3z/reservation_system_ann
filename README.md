@@ -108,9 +108,11 @@ Request Body Example: { "movie": "Some Movie Title", "theater": "Some Theater Na
 Response: If the seat reservation is successful, it sends an HTTP OK response. If there are no available seats, an error response is sent.
 ```
 
-- Error Handling:
-If the request method doesn't match any of the above endpoints or if it isn't GET or POST, it sends a 405 Method Not Allowed response.
+- Error Handling: If the request method doesn't match any of the above endpoints or if it isn't GET or POST, it sends a 405 Method Not Allowed response.
 The server also contains checks for ensuring that request body content is in the expected format (e.g., ensuring the "seats" is an array of integers).
+
+### Design decisions:
+- A seat reservation will only go through if all the seats that are being asked for are available. If not, then the reservation will return 500 error.
 
 ## CLIENT TECHNICAL DETAILS
 A simple python async client is available in the `client/` directory.
@@ -126,6 +128,7 @@ It performs the following actions per client:
 
 
 ## Example files
+
 ### Reservation system json definition
 
 ```
