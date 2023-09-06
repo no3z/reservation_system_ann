@@ -1,8 +1,7 @@
 version: '3'
 
 services:
-  reservation_server:   
-    container_name: reservation_system_server
+  reservation_server:       
     build:
       context: .
       dockerfile: Dockerfile.server
@@ -13,8 +12,7 @@ services:
         max-size: "2m"
         max-file: "1"
 
-  python_client:    
-    container_name: reservation_system_client
+  python_client:        
     network_mode: "host"
     build:
       context: .
