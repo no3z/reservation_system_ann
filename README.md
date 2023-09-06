@@ -129,6 +129,8 @@ It performs the following actions per client:
 
 ## Example files
 
+![Screenshot of docker-compose execution of both server and client](/images/output.png)
+
 ### Reservation system json definition
 
 ```
