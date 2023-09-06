@@ -46,7 +46,7 @@ A docker-compose file is also provided which will generate and execute both prog
 
 - On Workspace directory:
 ```
-docker-compose up
+docker-compose up --build
 ```
 
 **Dockerfiles steps**:
